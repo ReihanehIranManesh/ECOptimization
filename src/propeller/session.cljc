@@ -102,10 +102,13 @@
 #_(require '[propeller.problems.simple-regression :as regression])
 #_(regression/-main)
 
-(require '[propeller.problems.palindrome-classification :as palindrome])
-(palindrome/-main)
 ;; Default values can be used but also partially overridden
 
 #_(require '[propeller.problems.simple-regression :as regression])
 #_(regression/-main :population-size 100 :variation {:umad 1.0})
 
+(require '[propeller.problems.palindrome-classification :as palindrome])
+(palindrome/-main)
+
+(require '[propeller.problems.prefix-classification :as prefix])
+(prefix/-main)
