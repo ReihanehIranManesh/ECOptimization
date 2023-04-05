@@ -102,6 +102,8 @@
 #_(require '[propeller.problems.simple-regression :as regression])
 #_(regression/-main)
 
+(require '[propeller.problems.palindrome-classification :as palindrome])
+(palindrome/-main)
 ;; Default values can be used but also partially overridden
 
 #_(require '[propeller.problems.simple-regression :as regression])
