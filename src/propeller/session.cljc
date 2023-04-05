@@ -110,5 +110,8 @@
 (require '[propeller.problems.palindrome-classification :as palindrome])
 (palindrome/-main)
 
+(require '[propeller.problems.balanced-parenthesis-classification :as parenthesis])
+(parenthesis/-main)
+
 (require '[propeller.problems.prefix-classification :as prefix])
 (prefix/-main)
