@@ -113,5 +113,8 @@
 (require '[propeller.problems.balanced-parenthesis-classification :as parenthesis])
 (parenthesis/-main)
 
+(require '[propeller.problems.differ-by-n-classification :as differ])
+(differ/-main)
+
 (require '[propeller.problems.prefix-classification :as prefix])
 (prefix/-main)
