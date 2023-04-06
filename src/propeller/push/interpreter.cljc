@@ -2,7 +2,9 @@
   "Interprets Push programs."
   (:require [propeller.push.instructions :as instructions]
             [propeller.push.state :as state]
-            [propeller.push.instructions.input-output :as io]))
+            [propeller.push.instructions.input-output :as io]
+            [propeller.tools.memory :as memory]
+            [criterium.core :as criterium]))
 
 (defn interpret-one-step
   "Takes a Push state and executes the next instruction on the exec stack."
@@ -46,8 +48,21 @@
          history []]
     (if (or (empty? (:exec state))
             (> (:step state) step-limit))
-      (if (:keep-history state)
-        (assoc state :history history)
-        state)
+      
+      ;;;Very ugly way to handle multiple paramaters... should simplify soon
+      (let [temp_state (if (:keep-history state)
+                         (assoc state :history history)
+                         state)]
+        (if (:benchmark state) 
+          (assoc temp_state :efficiency (let
+                                               [bench-start-state
+                                                (dissoc start-state
+                                                        :keep-history :benchmark)]; run the program without any params
+                                                {:runtime (:mean criterium/quick-benchmark ;;runtime metric = mean runtime
+                                                                 #(interpret-program program bench-start-state step-limit))
+                                                 :memory (memory/allocated-bytes ;;memory used = bytes allocated
+                                                          #(interpret-program program bench-start-state step-limit))}))
+          temp_state))
+
       (recur (update (interpret-one-step state) :step inc)
              (when (:keep-history state) (conj history state))))))
