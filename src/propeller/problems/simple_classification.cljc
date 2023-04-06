@@ -94,5 +94,9 @@
        :parent-selection        :lexicase
        :umad-rate               0.1
        :variation               {:umad 1.0 :crossover 0.0}
-       :elitism                 false}
+       :elitism                 false
+       :simplification? true
+       :simplification-k 4
+       :simplification-steps 1000
+       :simplification-verbose? true}
       (apply hash-map (map #(if (string? %) (read-string %) %) args)))))

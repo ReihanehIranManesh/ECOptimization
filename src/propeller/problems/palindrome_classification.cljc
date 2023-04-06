@@ -100,5 +100,11 @@ Description: Given a string, return true if it is a palindrome Else return false
      :tournament-size         5
      :umad-rate               0.1
      :variation               {:umad 0.8 :crossover 0.2}
-     :elitism                 false}
+     :elitism                 false
+     :simplification? true
+     :simplification-k 4
+     :simplification-steps 1000
+     :simplification-verbose? true
+     }
+
     (apply hash-map (map #(if (string? %) (read-string %) %) args)))))

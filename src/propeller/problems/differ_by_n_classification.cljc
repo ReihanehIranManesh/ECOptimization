@@ -105,5 +105,9 @@ Description: Given a vector of 2 strings, return true if they differ byn more th
      :tournament-size         5
      :umad-rate               0.1
      :variation               {:umad 0.8 :crossover 0.2}
-     :elitism                 false}
+     :elitism                 false
+     :simplification? true
+     :simplification-k 4
+     :simplification-steps 1000
+     :simplification-verbose? true}
     (apply hash-map (map #(if (string? %) (read-string %) %) args)))))

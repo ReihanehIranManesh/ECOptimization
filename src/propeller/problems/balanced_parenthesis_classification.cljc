@@ -102,5 +102,9 @@ Description: Given a string of parenthesis, return true if it is a balanced Else
      :tournament-size         5
      :umad-rate               0.1
      :variation               {:umad 0.5 :crossover 0.5}
-     :elitism                 false}
+     :elitism                 false
+     :simplification? true
+     :simplification-k 4
+     :simplification-steps 1000
+     :simplification-verbose? true}
     (apply hash-map (map #(if (string? %) (read-string %) %) args)))))
