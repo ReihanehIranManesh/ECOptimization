@@ -53,8 +53,3 @@ Created by: Reihaneh Iranmanesh"
   (println (shuffle (vec (concat (generate-random-parens) (generate-more-balanced-parens))))))
 
 (-main)
-
-
-
-
-
