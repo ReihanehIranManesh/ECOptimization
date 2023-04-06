@@ -56,6 +56,24 @@
   [state stack]
   (count (get state stack)))
 
+;; Returns mean runtime and total memory allocated if the program was executed with the parameter :benchmark
+(defn get-efficiency 
+  "Returns mean runtime and total memory allocated if the program was executed with the parameter :benchmark"
+  [state] 
+  (get state :efficiency :not-measured))
+
+;; Returns mean runtime if the program was executed with the parameter :benchmark
+(defn get-runtime
+  "Returns mean runtime if the program was executed with the parameter :benchmark"
+  [state]
+  (get-in state [:efficiency :runtime] :not-measured))
+
+;; Returns total memory allocated if the program was executed with the parameter :benchmark
+(defn get-memory 
+  "Returns total memory allocated if the program was executed with the parameter :benchmark"
+  [state]
+  (get-in state [:efficiency :memory] :not-measured))
+
 ;; Returns the top item on the stack
 (defn peek-stack
   "Returns the top item on the stack"
