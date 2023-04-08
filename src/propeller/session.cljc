@@ -110,6 +110,9 @@
 (require '[propeller.problems.palindrome-classification :as palindrome])
 (palindrome/-main)
 
+(require '[propeller.problems.contains-subset-classification :as subset])
+(subset/-main)
+
 (require '[propeller.problems.balanced-parenthesis-classification :as parenthesis])
 (parenthesis/-main)
 
