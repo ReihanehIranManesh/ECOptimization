@@ -110,6 +110,9 @@
 (require '[propeller.problems.palindrome-classification :as palindrome])
 (palindrome/-main)
 
+(require '[propeller.problems.can-form-word-classification :as form_word])
+(form_word/-main)
+
 (require '[propeller.problems.contains-subset-classification :as subset])
 (subset/-main)
 
