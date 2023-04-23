@@ -7,6 +7,7 @@ Description: Given a vector of 2 strings, return true if they differ byn more th
             [propeller.push.interpreter :as interpreter]
             [propeller.push.state :as state]
             [propeller.gp :as gp]
+            [propeller.tools.efficieny-error-functions :as error]
             #?(:cljs [cljs.reader :refer [read-string]])))
 
 
@@ -91,10 +92,10 @@ Description: Given a vector of 2 strings, return true if they differ byn more th
   arguments with defaults that can be overridden from the command line
   or through a passed map."
   [& args]
-  (gp/gp
+  (gp/gp-efficiency
    (merge
     {:instructions            instructions
-     :error-function          error-function
+     :error-function          error/error-function2
      :training-data           (:train train-and-test-data)
      :testing-data            (:test train-and-test-data)
      :max-generations         500

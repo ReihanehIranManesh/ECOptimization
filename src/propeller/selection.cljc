@@ -10,7 +10,7 @@
   [pop argmap]
   (let [tournament-size (:tournament-size argmap)
         tournament-set (take tournament-size (shuffle pop))]
-    (apply min-key :total-error tournament-set)))
+    (apply min-key :total-amalgamated-error tournament-set)))
 
 (defn lexicase-selection
   "Selects an individual from the population using lexicase selection.

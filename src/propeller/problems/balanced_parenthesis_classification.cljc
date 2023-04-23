@@ -7,6 +7,7 @@ Description: Given a string of parenthesis, return true if it is a balanced Else
             [propeller.push.interpreter :as interpreter]
             [propeller.push.state :as state]
             [propeller.gp :as gp]
+            [propeller.tools.efficieny-error-functions :as error]
             #?(:cljs [cljs.reader :refer [read-string]])))
 
 
@@ -88,10 +89,10 @@ Description: Given a string of parenthesis, return true if it is a balanced Else
   arguments with defaults that can be overridden from the command line
   or through a passed map."
   [& args]
-  (gp/gp
+  (gp/gp-efficiency
    (merge
     {:instructions            instructions
-     :error-function          error-function
+     :error-function          error/error-function1
      :training-data           (:train train-and-test-data)
      :testing-data            (:test train-and-test-data)
      :max-generations         500
