@@ -11,8 +11,9 @@
   "Created by: Esteban Sanchez.
    adjusts weights of correctness error function and efficiency error function based off total number of correct cases."
   [errors runtimes]
-  (+ (* errors (- 7 (* (/ 1 5) (- 7 errors))))
-     (* (* (/ 1 5) (- 7 errors)) runtimes)))
+  (+ errors runtimes))
+  ;;   (+ (* errors (- 7 (* (/ 1 5) (- 7 errors))))
+;;      (* (* (/ 1 5) (- 7 errors)) runtimes)))
 
 
 (defn error-function1

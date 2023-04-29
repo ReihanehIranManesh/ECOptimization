@@ -31,7 +31,7 @@
                             :average-total-error   (float (/ (reduce + (map :total-error pop)) (count pop)))
                             :best-amalgamated-error (:total-amalgamated-error best)
                             :best-runtime (:runtimes best)
-                            :average-amalagamated-error   (float (/ (reduce + (map :total-amalgamated-error pop)) (count pop)))
+                           :average-amalagamated-error   (float (/ (reduce + (map :total-amalgamated-error pop)) (count pop)))
                             })
     (println)))
 
