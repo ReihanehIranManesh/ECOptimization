@@ -1,7 +1,6 @@
-(ns propeller.problems.string-classification
-  "String Classification:
-
-Given a string, return true if it contains A, C, G, and T. Else return false."
+(ns propeller.problems.char-follows-classification
+  "Char Follows Classification:
+Given a string, return true if everytime there is an a, a b follows."
   {:doc/format :markdown}
   (:require [propeller.genome :as genome]
             [propeller.push.interpreter :as interpreter]
@@ -41,18 +40,14 @@ Given a string, return true if it contains A, C, G, and T. Else return false."
         true
         false
         ""
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "A"
-        "C"
-        "G"
-        "T"))
+        "abcdefghijklmnopqrstuvwxyz"
+        "a"
+        "b"
+        ))
 
 (def train-and-test-data
-  "Training data: \"GCG\" \"GACAG\" \"AGAAG\" \"CCCA\" \"GATTACA\" \"TAGG\" \"GACT\" with associated boolean values based on problem definition.
-
-  Test data: \"GCGT\" \"GACTTAG\" \"AGTAAG\" \"TCCTCA\" \"GAACA\" \"AGG\" \"GAC\" with associated boolean values based on problem definition."
-  (let [train-inputs ["GCG" "GACAG" "AGAAG" "CCCA" "GATTACA" "TAGG" "GACT"]
-        test-inputs ["GCGT" "GACTTAG" "AGTAAG" "TCCTCA" "GAACA" "AGG" "GAC"]
+  (let [train-inputs ["aaiphgfidhud" "aabb" "abaac" "abaab" "abababab" "pkiodhiuabdsdabsd" "dssabjnhoab"]
+        test-inputs ["oihoijjab" "abjiohiuihabfdfd" "abbbbbb" "bbbbbbbbbbbbabbbb" "jiojaaa" "jiohjoafgdfg" "abdfdfdac"]
         train-outputs [false false false false true true true]
         test-outputs [true true true true false false false]]
     {:train (map (fn [in out] {:input1 (vector in) :output1 (vector out)}) train-inputs train-outputs)
@@ -69,11 +64,11 @@ Given a string, return true if it contains A, C, G, and T. Else return false."
         correct-outputs (map (fn [x] (first (:output1 x))) data)
         outputs (map (fn [input]
                        (state/peek-stack
-                         (interpreter/interpret-program
-                           program
-                           (assoc state/empty-state :input {:in1 input})
-                           (:step-limit argmap))
-                         :boolean))
+                        (interpreter/interpret-program
+                         program
+                         (assoc state/empty-state :input {:in1 input})
+                         (:step-limit argmap))
+                        :boolean))
                      inputs)
         errors (map (fn [correct-output output]
                       (if (= output :no-stack-item)
@@ -84,10 +79,10 @@ Given a string, return true if it contains A, C, G, and T. Else return false."
                     correct-outputs
                     outputs)]
     (assoc individual
-      :behaviors outputs
-      :errors errors
-      :total-error #?(:clj  (apply +' errors)
-                      :cljs (apply + errors)))))
+           :behaviors outputs
+           :errors errors
+           :total-error #?(:clj  (apply +' errors)
+                           :cljs (apply + errors)))))
 
 (defn -main
   "Runs the top-level genetic programming function, giving it a map of 
@@ -95,22 +90,22 @@ Given a string, return true if it contains A, C, G, and T. Else return false."
   or through a passed map."
   [& args]
   (gp/gp-efficiency
-    (merge
-      {:instructions            instructions
-       :error-function          error/error-function1
-       :training-data           (:train train-and-test-data)
-       :testing-data            (:test train-and-test-data)
-       :max-generations         500
-       :population-size         500
-       :max-initial-plushy-size 100
-       :step-limit              200
-       :parent-selection        :tournament-efficiency
-       :tournament-size         5
-       :umad-rate               0.1
-       :variation               {:umad 0.5 :crossover 0.5}
-       :elitism                 false
-       :simplification? true
-       :simplification-k 4
-       :simplification-steps 1000
-       :simplification-verbose? true}
-      (apply hash-map (map #(if (string? %) (read-string %) %) args)))))
+   (merge
+    {:instructions            instructions
+     :error-function          error/error-function1
+     :training-data           (:train train-and-test-data)
+     :testing-data            (:test train-and-test-data)
+     :max-generations         500
+     :population-size         500
+     :max-initial-plushy-size 100
+     :step-limit              200
+     :parent-selection        :tournament-efficiency
+     :tournament-size         5
+     :umad-rate               0.1
+     :variation               {:umad 0.5 :crossover 0.5}
+     :elitism                 false
+     :simplification? true
+     :simplification-k 4
+     :simplification-steps 1000
+     :simplification-verbose? true}
+    (apply hash-map (map #(if (string? %) (read-string %) %) args)))))
