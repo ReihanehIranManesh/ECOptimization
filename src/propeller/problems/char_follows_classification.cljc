@@ -1,13 +1,13 @@
-(ns propeller.problems.prefix-classification
-"Title: Prefix Classification:
-Created By: Esteban Sanchez
-Description: Given a vector of strings, return true if they have a shared prefix of 2"
+(ns propeller.problems.char-follows-classification
+  "Char Follows Classification:
+Given a string, return true if everytime there is an a, a b follows."
   {:doc/format :markdown}
   (:require [propeller.genome :as genome]
             [propeller.push.interpreter :as interpreter]
             [propeller.push.state :as state]
             [propeller.gp :as gp]
             [propeller.tools.efficieny-error-functions :as error]
+
             #?(:cljs [cljs.reader :refer [read-string]])))
 
 
@@ -16,8 +16,6 @@ Description: Given a vector of strings, return true if they have a shared prefix
 (def instructions
   "Set of original propel instructions"
   (list :in1
-        :in2
-        :in3
         :integer_add
         :integer_subtract
         :integer_mult
@@ -39,27 +37,21 @@ Description: Given a vector of strings, return true if they have a shared prefix
         'close
         0
         1
-        2
         true
         false
         ""
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "A"
-        "C"
-        "G"
-        "T"))
+        "abcdefghijklmnopqrstuvwxyz"
+        "a"
+        "b"
+        ))
 
 (def train-and-test-data
-
-  (let [train-inputs [["aa", "aa"] ["racecar","race"] ["not", "nate"] 
-                      ["bob", "bottle"] ["aaaaababbbb", "abbba"] ["babbab", "bat"] ["cat", "cucumber"]]
-        test-inputs [["aa", "aacbcdf"] ["racecar", "random"] ["racecare", "buy"] ["card", "basket"] 
-                     ["carddrac", "card"] ["aaaaab", "babb"] ["ccc", "ccaliber"]]
-        train-outputs [true true false true false true false]
-        test-outputs [true true false false true false true]]
+  (let [train-inputs ["aaiphgfidhud" "aabb" "abaac" "abaab" "abababab" "pkiodhiuabdsdabsd" "dssabjnhoab"]
+        test-inputs ["oihoijjab" "abjiohiuihabfdfd" "abbbbbb" "bbbbbbbbbbbbabbbb" "jiojaaa" "jiohjoafgdfg" "abdfdfdac"]
+        train-outputs [false false false false true true true]
+        test-outputs [true true true true false false false]]
     {:train (map (fn [in out] {:input1 (vector in) :output1 (vector out)}) train-inputs train-outputs)
-     :test (map (fn [in out] {:input1 (vector in) :output1 (vector  out)}) test-inputs test-outputs)})
-)
+     :test (map (fn [in out] {:input1 (vector in) :output1 (vector  out)}) test-inputs test-outputs)}))
 
 (defn error-function
   "Finds the behaviors and errors of an individual: Error is 0 if the value and
@@ -74,7 +66,7 @@ Description: Given a vector of strings, return true if they have a shared prefix
                        (state/peek-stack
                         (interpreter/interpret-program
                          program
-                         (assoc state/empty-state :input {:in1 (first input) :in2 (second input) :in3 (last input)})
+                         (assoc state/empty-state :input {:in1 input})
                          (:step-limit argmap))
                         :boolean))
                      inputs)
@@ -100,7 +92,7 @@ Description: Given a vector of strings, return true if they have a shared prefix
   (gp/gp-efficiency
    (merge
     {:instructions            instructions
-     :error-function          error/error-function2
+     :error-function          error/error-function1
      :training-data           (:train train-and-test-data)
      :testing-data            (:test train-and-test-data)
      :max-generations         500
@@ -110,11 +102,10 @@ Description: Given a vector of strings, return true if they have a shared prefix
      :parent-selection        :tournament-efficiency
      :tournament-size         5
      :umad-rate               0.1
-     :variation               {:umad 0.8 :crossover 0.2}
+     :variation               {:umad 0.5 :crossover 0.5}
      :elitism                 false
      :simplification? true
      :simplification-k 4
      :simplification-steps 1000
      :simplification-verbose? true}
-    (apply hash-map (map #(if (string? %) (read-string %) %) args))))
-  )
+    (apply hash-map (map #(if (string? %) (read-string %) %) args)))))

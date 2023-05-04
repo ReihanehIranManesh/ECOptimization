@@ -29,9 +29,11 @@
                             ;; :behavioral-diversity  (float (/ (count (distinct (map :behaviors pop))) (count pop)))
                             :average-genome-length (float (/ (reduce + (map count (map :plushy pop))) (count pop)))
                             :average-total-error   (float (/ (reduce + (map :total-error pop)) (count pop)))
+
                             :best-amalgamated-error (:total-amalgamated-error best)
                             :best-runtime (:runtimes best)
                             :average-amalagamated-error   (float (/ (reduce + (map :total-amalgamated-error pop)) (count pop)))
+
                             })
     (println)))
 

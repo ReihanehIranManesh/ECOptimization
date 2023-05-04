@@ -10,6 +10,14 @@
   [pop argmap]
   (let [tournament-size (:tournament-size argmap)
         tournament-set (take tournament-size (shuffle pop))]
+    (apply min-key :total-error tournament-set)))
+
+(defn tournament-efficiency
+  "Selects an individual from the population using tournaments of
+  tournament-size by taking the individual in the tournament with the lowest :total-error. "
+  [pop argmap]
+  (let [tournament-size (:tournament-size argmap)
+        tournament-set (take tournament-size (shuffle pop))]
     (apply min-key :total-amalgamated-error tournament-set)))
 
 (defn lexicase-selection
@@ -139,6 +147,7 @@
   "Selects a parent from the population using the specified method."
   [pop argmap]
   (case (:parent-selection argmap)
+    :tournament-efficiency (tournament-efficiency pop argmap)
     :tournament (tournament-selection pop argmap)
     :lexicase (lexicase-selection pop argmap)
     :epsilon-lexicase (epsilon-lexicase-selection pop argmap)

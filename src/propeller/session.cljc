@@ -110,6 +110,8 @@
 (require '[propeller.problems.palindrome-classification :as palindrome])
 (palindrome/-main)
 
+(require '[propeller.problems.string-classification :as string])
+(string/-main)
 
 (require '[propeller.problems.contains-subset-classification :as subset])
 (subset/-main)
@@ -119,3 +121,9 @@
 
 (require '[propeller.problems.differ-by-n-classification :as differ])
 (differ/-main)
+
+(require '[propeller.problems.can-form-word-classification :as word])
+(word/-main)
+
+(require '[propeller.problems.char-follows-classification :as follows])
+(follows/-main)
