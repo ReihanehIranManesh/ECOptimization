@@ -31,10 +31,11 @@
                             :average-total-error   (float (/ (reduce + (map :total-error pop)) (count pop)))
                             :best-amalgamated-error (:total-amalgamated-error best)
                             :best-runtime (:runtimes best)
-                           :average-amalagamated-error   (float (/ (reduce + (map :total-amalgamated-error pop)) (count pop)))
+                            :average-amalagamated-error   (float (/ (reduce + (map :total-amalgamated-error pop)) (count pop)))
                             })
     (println)))
 
+;; somehow report gets a null pointer exception but when I comment out the culprit line it stil does, but I am unsure how to debug.
 (defn gp-efficiency
   "Main GP loop for esteban's efficiency algorithm.
 
@@ -75,9 +76,9 @@ repeatedly function, and then continues to the next iteration of the loop. "
                                    (partial error-function argmap (:training-data argmap))
                                    population))             ;population sorted by :total-error
           best-individual (first evaluated-pop)
-          argmap (if (= (:parent-selection argmap) :epsilon-lexicase)
+          argmap (if (or (= (:parent-selection argmap) :epsilon-lexicase-parallel) (= (:parent-selection argmap) :epsilon-lexicase))
                    (assoc argmap :epsilons (selection/epsilon-list evaluated-pop))
-                   argmap)]                                 ;adds :epsilons if using epsilon-lexicase
+                   argmap)]                                 ;adds :epsilons if using epsilon-lexicase or epsilon-lexicase-parallel
       (if (:custom-report argmap)
         ((:custom-report argmap) evaluated-pop generation argmap)
         (report evaluated-pop generation argmap))
