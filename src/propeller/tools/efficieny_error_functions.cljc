@@ -103,9 +103,10 @@
                                                                   :cljs (apply + errors))
                                                                #?(:clj  (apply +' runtimes)
                                                                   :cljs (apply + runtimes)))
+           :total-runtime #?(:clj  (apply +' runtimes)
+                             :cljs (apply + runtimes))
            :total-error #?(:clj  (apply +' errors)
                            :cljs (apply + errors)))))
-
 
 
 
