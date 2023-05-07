@@ -15,15 +15,10 @@
   "Created by: Reihaneh Iranmanesh.
    adjusts weights of correctness error function and efficiency error function based off total number of correct cases."
   [errors runtimes]
-  (let [adjusted_lambda (adaptive_lambda errors)]
-    (+ errors (* adjusted_lambda runtimes))))
-
-;; (defn amalgamate_error_function
-;;   "Created by: Esteban Sanchez.
-;;    adjusts weights of correctness error function and efficiency error function based off total number of correct cases."
-;;   [errors runtimes]
-;;   (+ (* errors (- 7 (* (/ 1 5) (- 7 errors))))
+  (+ errors runtimes))
+  ;;   (+ (* errors (- 7 (* (/ 1 5) (- 7 errors))))
 ;;      (* (* (/ 1 5) (- 7 errors)) runtimes)))
+
 
 (defn error-function1
   "Finds the behaviors and errors of an individual: Error is 0 if the value and
@@ -66,6 +61,8 @@
                                                                   :cljs (apply + errors))
                                                                #?(:clj  (apply +' runtimes)
                                                                   :cljs (apply + runtimes)))
+           :total-runtime #?(:clj  (apply +' runtimes)
+                              :cljs (apply + runtimes))
            :total-error #?(:clj  (apply +' errors)
                            :cljs (apply + errors)))))
 
@@ -110,7 +107,11 @@
                                                                   :cljs (apply + errors))
                                                                #?(:clj  (apply +' runtimes)
                                                                   :cljs (apply + runtimes)))
+           :total-runtime #?(:clj  (apply +' runtimes)
+                             :cljs (apply + runtimes))
            :total-error #?(:clj  (apply +' errors)
                            :cljs (apply + errors)))))
+
+
 
 
