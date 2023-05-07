@@ -1,7 +1,7 @@
-(ns propeller.problems.prefix-classification
-"Title: Prefix Classification:
+(ns propeller.problems.is-anagram
+  "Title: contains-subset-classification:
 Created By: Esteban Sanchez
-Description: Given a vector of strings, return true if they have a shared prefix of 2"
+Description: Given a vector of 2 strings, return true if the first contains the second string"
   {:doc/format :markdown}
   (:require [propeller.genome :as genome]
             [propeller.push.interpreter :as interpreter]
@@ -11,13 +11,11 @@ Description: Given a vector of strings, return true if they have a shared prefix
             #?(:cljs [cljs.reader :refer [read-string]])))
 
 
-
 ;; Set of original propel instructions
 (def instructions
   "Set of original propel instructions"
   (list :in1
         :in2
-        :in3
         :integer_add
         :integer_subtract
         :integer_mult
@@ -35,7 +33,6 @@ Description: Given a vector of strings, return true if they have a shared prefix
         :string_reverse
         :string_concat
         :string_length
-        :string_contains
         'close
         0
         1
@@ -43,23 +40,17 @@ Description: Given a vector of strings, return true if they have a shared prefix
         true
         false
         ""
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "A"
-        "C"
-        "G"
-        "T"))
+        "abcdefghijklmnopqrstuvwxyz"))
 
 (def train-and-test-data
 
-  (let [train-inputs [["aa", "aa"] ["racecar","race"] ["not", "nate"] 
-                      ["bob", "bottle"] ["aaaaababbbb", "abbba"] ["babbab", "bat"] ["cat", "cucumber"]]
-        test-inputs [["aa", "aacbcdf"] ["racecar", "random"] ["racecare", "buy"] ["card", "basket"] 
-                     ["carddrac", "card"] ["aaaaab", "babb"] ["ccc", "ccaliber"]]
-        train-outputs [true true false true false true false]
-        test-outputs [true true false false true false true]]
+  (let [train-inputs [["listen" "silent"] ["earth" "hearts"] ["debit card" "bad credit"] ["rail safety" "fairy tales"] ["astronomers" "moon"]]
+        test-inputs [["listen" "silently"] ["earth" "heart"] ["debit cards" "bad score"] ["rail safety" "tale"] ["astronomer" "moonstarer"]]
+        train-outputs [true false true true false]
+        test-outputs [false true false false true]]
+
     {:train (map (fn [in out] {:input1 (vector in) :output1 (vector out)}) train-inputs train-outputs)
-     :test (map (fn [in out] {:input1 (vector in) :output1 (vector  out)}) test-inputs test-outputs)})
-)
+     :test (map (fn [in out] {:input1 (vector in) :output1 (vector  out)}) test-inputs test-outputs)}))
 
 (defn error-function
   "Finds the behaviors and errors of an individual: Error is 0 if the value and
@@ -74,7 +65,7 @@ Description: Given a vector of strings, return true if they have a shared prefix
                        (state/peek-stack
                         (interpreter/interpret-program
                          program
-                         (assoc state/empty-state :input {:in1 (first input) :in2 (second input) :in3 (last input)})
+                         (assoc state/empty-state :input {:in1 (first input) :in2 (second input)})
                          (:step-limit argmap))
                         :boolean))
                      inputs)
@@ -107,14 +98,13 @@ Description: Given a vector of strings, return true if they have a shared prefix
      :population-size         500
      :max-initial-plushy-size 100
      :step-limit              200
-     :parent-selection        :lexicase-selection
+     :parent-selection        :tournament-efficiency
      :tournament-size         5
      :umad-rate               0.1
-     :variation               {:umad 0.8 :crossover 0.2}
+     :variation               {:umad 0.5 :crossover 0.5}
      :elitism                 false
      :simplification? true
      :simplification-k 4
      :simplification-steps 1000
      :simplification-verbose? true}
-    (apply hash-map (map #(if (string? %) (read-string %) %) args))))
-  )
+    (apply hash-map (map #(if (string? %) (read-string %) %) args)))))
