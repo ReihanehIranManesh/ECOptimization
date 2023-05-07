@@ -11,9 +11,9 @@
   "Created by: Esteban Sanchez.
    adjusts weights of correctness error function and efficiency error function based off total number of correct cases."
   [errors runtimes]
-  (+ errors runtimes))
-  ;;   (+ (* errors (- 7 (* (/ 1 5) (- 7 errors))))
-;;      (* (* (/ 1 5) (- 7 errors)) runtimes)))
+  (+ (* errors (- 7 (* (/ 1 5) (- 7 errors))))
+     (* (* (/ 1 5) (- 7 errors)) runtimes)))
+
 
 
 (defn error-function1
@@ -57,6 +57,8 @@
                                                                   :cljs (apply + errors))
                                                                #?(:clj  (apply +' runtimes)
                                                                   :cljs (apply + runtimes)))
+           :total-runtime #?(:clj  (apply +' runtimes)
+                              :cljs (apply + runtimes))
            :total-error #?(:clj  (apply +' errors)
                            :cljs (apply + errors)))))
 
@@ -101,7 +103,11 @@
                                                                   :cljs (apply + errors))
                                                                #?(:clj  (apply +' runtimes)
                                                                   :cljs (apply + runtimes)))
+           :total-runtime #?(:clj  (apply +' runtimes)
+                             :cljs (apply + runtimes))
            :total-error #?(:clj  (apply +' errors)
                            :cljs (apply + errors)))))
+
+
 
 
