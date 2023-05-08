@@ -6,13 +6,20 @@
             #?(:cljs [cljs.reader :refer [read-string]])))
 
 
-(defn adaptive_lambda [errors]
-  (if (< errors 4)
-    0.1
-    1.0))
+;; (defn adaptive_lambda [errors]
+;;   (if (< errors 3)
+;;     0.1
+;;     1.0))
+
+;; (defn amalgamate_error_function
+;;   "Created by: Reihaneh Iranmanesh.
+;;   [errors runtimes]
+;;   (let [adjusted_lambda (adaptive_lambda errors)]
+;;     (+ errors (* adjusted_lambda runtimes))))
+
 
 (defn amalgamate_error_function
-  "Created by: Reihaneh Iranmanesh.
+  "Created by: Esteban Sanchez.
    adjusts weights of correctness error function and efficiency error function based off total number of correct cases."
   [errors runtimes]
   (+ errors runtimes))
