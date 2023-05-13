@@ -39,7 +39,9 @@
         ))))
 
 (defn lexicase-selection2
-  "Modifying lexicase selection so that there is a specified chance  (specified in the if statement) you take the fastest individuals, otherwise it does regular case-based lexicase selection"
+  "Modifying lexicase selection so that there is a specified chance
+   (specified in the if statement) you take the fastest individuals, 
+   otherwise it does regular case-based lexicase selection"
   [pop argmap]
   (loop [survivors (map rand-nth (vals (group-by :errors pop)))
          cases (shuffle (range (count (:errors (first pop)))))]

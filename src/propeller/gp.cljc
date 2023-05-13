@@ -19,25 +19,33 @@
   "Reports information for each generation."
   [pop generation argmap]
   (let [best (first pop)]
-    (clojure.pprint/pprint {:generation            generation
-                            ;; :best-plushy           (:plushy best)
-                            ;; :best-program          (genome/plushy->push (:plushy best) argmap)
-                            :best-total-error      (:total-error best)
-                            :best-errors           (:errors best)
-                            ;; :best-behaviors        (:behaviors best)
-                            ;; :genotypic-diversity   (float (/ (count (distinct (map :plushy pop))) (count pop)))
-                            ;; :behavioral-diversity  (float (/ (count (distinct (map :behaviors pop))) (count pop)))
-                            :average-genome-length (float (/ (reduce + (map count (map :plushy pop))) (count pop)))
-                            :average-total-error   (float (/ (reduce + (map :total-error pop)) (count pop)))
-
-                            :best-amalgamated-error (:total-amalgamated-error best)
-                            :best-runtime (:runtimes best)
-                            :average-amalagamated-error   (float (/ (reduce + (map :total-amalgamated-error pop)) (count pop)))
-
-                            })
+    (if (contains? best :total-amalgamated-error)
+      (clojure.pprint/pprint {:generation            generation
+                              :best-plushy           (:plushy best)
+                              :best-program          (genome/plushy->push (:plushy best) argmap)
+                              :best-total-error      (:total-error best)
+                              :best-errors           (:errors best)
+                              :best-behaviors        (:behaviors best)
+                              :genotypic-diversity   (float (/ (count (distinct (map :plushy pop))) (count pop)))
+                              :behavioral-diversity  (float (/ (count (distinct (map :behaviors pop))) (count pop)))
+                              :average-genome-length (float (/ (reduce + (map count (map :plushy pop))) (count pop)))
+                              :average-total-error   (float (/ (reduce + (map :total-error pop)) (count pop)))
+                              :best-amalgamated-error (:total-amalgamated-error best)
+                              :best-runtime (:runtimes best)
+                              :average-amalagamated-error   (float (/ (reduce + (map :total-amalgamated-error pop)) (count pop)))})
+      (clojure.pprint/pprint {:generation            generation
+                              :best-plushy           (:plushy best)
+                              :best-program          (genome/plushy->push (:plushy best) argmap)
+                              :best-total-error      (:total-error best)
+                              :best-errors           (:errors best)
+                              :best-behaviors        (:behaviors best)
+                              :genotypic-diversity   (float (/ (count (distinct (map :plushy pop))) (count pop)))
+                              :behavioral-diversity  (float (/ (count (distinct (map :behaviors pop))) (count pop)))
+                              :average-genome-length (float (/ (reduce + (map count (map :plushy pop))) (count pop)))
+                              :average-total-error   (float (/ (reduce + (map :total-error pop)) (count pop)))
+                              }))
     (println)))
 
-;; somehow report gets a null pointer exception but when I comment out the culprit line it stil does, but I am unsure how to debug.
 (defn gp-efficiency
   "Main GP loop for esteban's efficiency algorithm.
 

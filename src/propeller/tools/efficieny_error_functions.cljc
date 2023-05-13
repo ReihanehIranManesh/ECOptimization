@@ -1,4 +1,6 @@
 (ns propeller.tools.efficieny-error-functions  
+  "Created By Esteban Sanchez,
+   set of functions to calculate error functions which include runtime"
   {:doc/format :markdown}
   (:require [propeller.genome :as genome]
             [propeller.push.interpreter :as interpreter]
@@ -20,18 +22,17 @@
 
 (defn amalgamate_error_function
   "Created by: Esteban Sanchez.
-   adjusts weights of correctness error function and efficiency error function based off total number of correct cases."
+   naturally weighted error function, errors are 0 or 1, runtimes are scaled between 0 1"
   [errors runtimes]
   (+ errors runtimes))
-  ;;   (+ (* errors (- 7 (* (/ 1 5) (- 7 errors))))
-;;      (* (* (/ 1 5) (- 7 errors)) runtimes)))
 
 
 (defn error-function1
   "Finds the behaviors and errors of an individual: Error is 0 if the value and
   the program's selected behavior match, or 1 if they differ, or 1000000 if no
   behavior is produced. The behavior is here defined as the final top item on
-  the BOOLEAN stack. TAKES 1 INPUT"
+  the BOOLEAN stack. appends amalgamated error to individual along with runtime information
+  TAKES 1 INPUT. "
   [argmap data individual]
   (let [program (genome/plushy->push (:plushy individual) argmap)
         inputs (map (fn [x] (first (:input1 x))) data)
@@ -77,7 +78,8 @@
   "Finds the behaviors and errors of an individual: Error is 0 if the value and
   the program's selected behavior match, or 1 if they differ, or 1000000 if no
   behavior is produced. The behavior is here defined as the final top item on
-  the BOOLEAN stack. TAKES 2 INPUT"
+  the BOOLEAN stack. appends amalgamated error to individual along with runtime information
+   TAKES 2 INPUT"
   [argmap data individual]
   (let [program (genome/plushy->push (:plushy individual) argmap)
         inputs (map (fn [x] (first (:input1 x))) data)
