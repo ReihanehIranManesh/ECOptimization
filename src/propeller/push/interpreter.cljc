@@ -1,5 +1,6 @@
 (ns propeller.push.interpreter
-  "Interprets Push programs."
+  "Interprets Push programs.
+   Edited by Regina Deri: interpret-program; added optional efficiency measurement functionality"
   (:require [propeller.push.instructions :as instructions]
             [propeller.push.state :as state]
             [propeller.push.instructions.input-output :as io]
@@ -41,14 +42,16 @@
   "Runs the given problem starting with the stacks in start-state. If the
   start-state includes the key :keep-history with a truthy value, then
   the returned state will include the key :history with a value that is a
-  vector containing all states prior to the final state."
+  vector containing all states prior to the final state.  If the
+  start-state includes the key :benchmark with a truthy value, then
+  the returned state will include the key :efficiency containing a hashmap
+  with the runtime of program in ms and the memory allocated by the program
+  in bytes under the :runtime and :memory keys respectively."
   [program start-state step-limit]
   (loop [state (assoc start-state :exec (list program) :step 1)
          history []]
     (if (or (empty? (:exec state))
             (> (:step state) step-limit))
-      
-      ;;;Very ugly way to handle multiple paramaters... should simplify soon
       (let [temp_state (if (:keep-history state)
                          (assoc state :history history)
                          state)]
