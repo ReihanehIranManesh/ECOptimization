@@ -8,6 +8,7 @@
             #?(:cljs [cljs.reader :refer [read-string]])))
 
 
+
 ;; (defn sigmoid
 ;;   [x]
 ;;   (/ 1 (+ 1 (Math/exp (- x)))))
