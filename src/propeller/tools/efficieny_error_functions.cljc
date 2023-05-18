@@ -8,13 +8,51 @@
             #?(:cljs [cljs.reader :refer [read-string]])))
 
 
+;; (defn sigmoid
+;;   [x]
+;;   (/ 1 (+ 1 (Math/exp (- x)))))
+
+;; (defn thresholded_amalgamate_error_function_simple
+;;   "Created by: Reihaneh Iranmanesh."
+;;   "A function that considers both errors and runtimes, 
+;;    giving more weight to runtimes after a certain error threshold."
+;;   [errors runtimes]
+;;   (let [error-threshold 5
+;;         runtime-weight 1
+;;         error-ratio (if (= errors 0) 0 (/ errors error-threshold))
+;;         weight (sigmoid error-ratio)]
+;;     (+ (* (- 1 weight) errors) (* weight runtime-weight runtimes))))
+
+
+;; (defn thresholded_amalgamate_error_function
+;;   "Created by: Reihaneh Iranmanesh."
+;;   "A complicated function that considers both errors and runtimes, 
+;;    giving more weight to runtimes after a certain error threshold."
+;;   [errors runtimes error-threshold runtime-weight]
+;;   (let [error-ratio (if (= errors 0) 0 (/ errors error-threshold))
+;;         weight (sigmoid error-ratio)]
+;;     (+ (* (- 1 weight) errors) (* weight runtime-weight runtimes))))
+
+
+;; (defn amalgamate_error_function_updated
+;;   "Created by: Reihaneh Iranmanesh."
+;;   "A function that considers both errors and runtimes, 
+;;    but reduces the penalty for longer runtimes over generations."
+;;   [errors runtimes generation max-generation]
+;;   (let [error-threshold 5
+;;         scaling-factor (if (= max-generation 0) 1 (/ generation max-generation))
+;;         error-ratio (if (= errors 0) 0 (/ errors error-threshold))
+;;         weight (sigmoid error-ratio)]
+;;     (+ (* (- 1 weight) errors) (* weight scaling-factor runtimes))))
+
+
 ;; (defn adaptive_lambda [errors]
 ;;   (if (< errors 3)
 ;;     0.1
 ;;     1.0))
 
-;; (defn amalgamate_error_function
-;;   "Created by: Reihaneh Iranmanesh.
+;; (defn amalgamate_error_adaptive_lambda
+;;   "Created by: Reihaneh Iranmanesh."
 ;;   [errors runtimes]
 ;;   (let [adjusted_lambda (adaptive_lambda errors)]
 ;;     (+ errors (* adjusted_lambda runtimes))))
