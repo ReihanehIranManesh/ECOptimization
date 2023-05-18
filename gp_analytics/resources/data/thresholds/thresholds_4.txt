@@ -1,0 +1,5 @@
+({:tournament ({:balanced-parenthesis 3} {:can-form-word 2} {:char-follows 35} {:common-subsequence 41} {:contains-subset 0} {:differ-by-n 11} {:is-anagram 4} {:palindrome 50} {:prefix 0} {:string-classification 50})} 
+{:tournament-efficiency ({:balanced-parenthesis 3} {:can-form-word 1} {:char-follows 28} {:common-subsequence 45} {:contains-subset 0} {:differ-by-n 6} {:is-anagram 5} {:palindrome 50} {:prefix 0} {:string-classification 50})} 
+{:lexicase ({:balanced-parenthesis 3} {:can-form-word 2} {:char-follows 28} {:common-subsequence 40} {:contains-subset 0} {:differ-by-n 8} {:is-anagram 4} {:palindrome 50} {:prefix 0} {:string-classification 50})} 
+{:lexicase2 ({:balanced-parenthesis 9} {:can-form-word 0} {:char-follows 29} {:common-subsequence 44} {:contains-subset 0} {:differ-by-n 8} {:is-anagram 3} {:palindrome 50} {:prefix 0} {:string-classification 50})} 
+{:lexicase-parallel ({:balanced-parenthesis 8} {:can-form-word 0} {:char-follows 30} {:common-subsequence 37} {:contains-subset 0} {:differ-by-n 10} {:is-anagram 1} {:palindrome 50} {:prefix 0} {:string-classification 50})})
